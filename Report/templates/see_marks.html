@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+{% block link %}{% endblock link %}
+
+{% block body %}
+<style>
+    body {
+        background-color: #f9f9f9;
+    }
+    
+    table, th, td {
+        border: 1px solid;
+        text-align: center;
+    }
+    .section-spacing {
+        margin-bottom: 2rem; /* Adjust the spacing as needed */
+    }
+</style>
+<div class="container mt-5">
+    <div class="section-spacing">
+        <h5>Name: {{ student.student_name }}</h5>
+        <h5>Roll No: {{ student.student_id.student_id }}</h5>
+        <h5>Department: {{ student.department.department }}</h5>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sr.No.</th>
+                <th>Subject</th>
+                <th>Marks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in queryset %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ record.subject.subject_name }}</td>
+                <td>{{ record.marks }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <h5>Rank: {{queryset.first.student.studentrank.first.student_rank}}</h5>
+        <h5>Total: {{ totalmarks.totalmarks }}</h5>
+        <h5>Percentage: {{percentage|floatformat:2 }}%</h5>
+        <h5>Date of Result: {{queryset.first.student.studentrank.first.date_of_report_card_generation}} </h5>
+    </div>
+</div>
+{% endblock body %}

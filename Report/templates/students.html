@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+{% block link %}{% endblock link %}
+
+{% block body %}
+
+    <style>
+        body {
+            background-color: #f9f9f9;
+        }
+        table, th, td {
+            border: 1px solid;
+            text-align: center;
+        }
+    </style>
+
+<form>
+    <div class="d-flex flex-column justify-content-center align-items-center my-5">
+      <div style="width:20rem;">
+        <div class="input-group">
+          <input type="search" id="exampleInputSearch" name="Search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Search</button>
+        </div>
+      </div>
+    </div>
+    </form>
+
+<div class="container mt-5 ">
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Sr.No. </th>
+        <th scope="col">Student ID </th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Student Department</th>
+        <th scope="col">Student Email</th>
+        <th scope="col">Student age</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for student in queryset  %}
+        
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>
+            <a href="{% url 'see_marks' student.student_id %}">{{student.student_id}}</a>
+            </td>
+        <td>{{student.student_name}}</td>
+        <td>{{student.department.department}}</td>
+        <td>{{student.student_email}}</td>
+        <td>{{student.student_age}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<nav aria-label="Pagination">
+    <ul class="pagination justify-content-center">
+        {% if queryset.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="First">
+                    &laquo; First
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ queryset.previous_page_number }}">
+                    Previous
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+            </li>
+        {% endif %}
+        <li class="page-item active">
+            <a class="page-link">
+                Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}
+            </a>
+        </li>
+
+        {% if queryset.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ queryset.next_page_number }}">
+                    Next
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ queryset.paginator.num_pages }}" aria-label="Last">
+                    Last &raquo;
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+
+{% endblock body %}
